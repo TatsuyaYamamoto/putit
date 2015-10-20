@@ -1,0 +1,31 @@
+{
+  "name": "putit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TatsuyaYamamoto/putit.git"
+  },
+  "keywords": [
+    "electron",
+    "node.js"
+  ],
+  "author": "TatsuyaYamamoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TatsuyaYamamoto/putit/issues"
+  },
+  "homepage": "https://github.com/TatsuyaYamamoto/putit#readme",
+  "devDependencies": {
+    "del": "^2.0.2",
+    "electron-connect": "^0.3.3",
+    "electron-packager": "^5.1.0",
+    "gulp": "^3.9.0",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-load-plugins": "^1.0.0",
+    "run-sequence": "^1.1.4"
+  },
+  "dependencies": {}
+}

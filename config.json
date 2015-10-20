@@ -1,0 +1,11 @@
+{
+	"appName": "putit",
+	"dir": {
+		"src":		"./src/",
+		"dist":		"./package/build_src/",
+		"appFile":	"./package/"
+	},
+	"system": {
+		"version": "0.30.4"
+	}
+}
