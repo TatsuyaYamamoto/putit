@@ -4,6 +4,7 @@ var gulp 		= require('gulp');
 var $ 			= require('gulp-load-plugins');
 
 var runSequence = require('run-sequence');
+var del 		= require('del');
 
 var electron 	= require('electron-connect').server.create();
 var electron_packager = require('electron-packager');
@@ -42,15 +43,20 @@ gulp.task('liveRestart', function(callback){
 
 
 /* dist dirタスク　*/
-gulp.task('dist', [
-	'dist_core',
-	'dist_js',
-	'dist_lib',
-	'dist_css',
-	'dist_img',
-	'dist_sound'
-])
-
+gulp.task('dist', function(callback){
+	runSequence(
+		'del_dist', 
+		[
+			'dist_core',
+			'dist_js',
+			'dist_lib',
+			'dist_css',
+			'dist_img',
+			'dist_sound'
+		], 
+		callback
+	)
+})
 
 // electron task -------------------------------------------------
 
@@ -75,6 +81,12 @@ gulp.task('electron_package', function (done) {
 		// 追加でパッケージに手を加えたければ, path配下を適宜いじる
 		done();
 	});
+});
+
+
+// files: delete dist dir -------------------------------------------------
+gulp.task('del_dist', function(){
+	del([_config.dir.dist])
 });
 
 // files: src --> dist -------------------------------------------------
