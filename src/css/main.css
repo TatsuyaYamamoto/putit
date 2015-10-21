@@ -1,3 +1,23 @@
 body{
-	background-image: url('../img/CorkBoard.jpg');
+	/*background-image: url('../img/CorkBoard.jpg');*/
+}
+
+#toolbar{
+}
+
+#toolbar button{
+}
+
+.sheet{
+	background-color: yellow;
+}
+
+.sheet .setting{
+	border: 1px solid black;
+}
+
+.sheet textarea{
+	border:0;
+	background-color:#ffffff;
+	color:#000000;
 }
