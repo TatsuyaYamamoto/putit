@@ -1,4 +1,5 @@
 .DS_Store
 config.secret.json
 node_modules/
+bower_components/
 package/

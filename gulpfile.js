@@ -1,7 +1,8 @@
 // 'use strict';
 
 var gulp 		= require('gulp');
-var $ 			= require('gulp-load-plugins');
+var plumber 	= require('gulp-plumber');
+var imagemin 	= require('gulp-imagemin');
 
 var runSequence = require('run-sequence');
 var del 		= require('del');
@@ -45,7 +46,7 @@ gulp.task('liveRestart', function(callback){
 /* dist dirタスク　*/
 gulp.task('dist', function(callback){
 	runSequence(
-		'del_dist', 
+		// 'del_dist', 
 		[
 			'dist_core',
 			'dist_js',
@@ -97,6 +98,7 @@ gulp.task('dist_core', function(){
 	gulp.src(_config.dir.src + 'index.html')
 		.pipe(gulp.dest(_config.dir.dist));
 	gulp.src(_config.dir.src + 'index.js')
+		.pipe(plumber())
 		.pipe(gulp.dest(_config.dir.dist));
 });
 
@@ -104,6 +106,7 @@ gulp.task('dist_core', function(){
 // js files: src --> dist
 gulp.task('dist_js', function(){
 	gulp.src(_config.dir.src + 'js/*')
+		.pipe(plumber())
 		.pipe(gulp.dest(_config.dir.dist + 'js/'));
 
 })
@@ -117,13 +120,14 @@ gulp.task('dist_lib', function(){
 // css files: src --> dist
 gulp.task('dist_css', function(){
 	gulp.src(_config.dir.src + 'css/**/*')
+		.pipe(plumber())
 		.pipe(gulp.dest(_config.dir.dist + 'css/'));
 })
 
 // img files: src --> dist
 gulp.task('dist_img', function(){
 	gulp.src(_config.dir.src + 'img/**/*')
-		// .pipe($.imagemin())
+		.pipe(imagemin())
 		.pipe(gulp.dest(_config.dir.dist + 'img/'));
 })
 

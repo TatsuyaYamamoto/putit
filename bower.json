@@ -1,0 +1,13 @@
+{
+  "name": "putit",
+  "version": "1.0.0",
+  "homepage": "https://github.com/TatsuyaYamamoto/putit",
+  "authors": [
+    "TatsuyaYamamoto <yamamoto.tatsuya@fujixerox.co.jp>"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4",
+    "ace-min-noconflict": "~1.1.9"
+  }
+}

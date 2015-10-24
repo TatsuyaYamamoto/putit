@@ -1,23 +1,52 @@
 body{
-	/*background-image: url('../img/CorkBoard.jpg');*/
+	background-image: url(../img/CorkBoard.jpg);
 }
+h1{
+
+}
+
 
 #toolbar{
+
 }
 
-#toolbar button{
+#workspace{
+	/*border: 1px solid black;*/
 }
 
 .sheet{
 	background-color: yellow;
+	display: inline-block;
+	box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }
 
-.sheet .setting{
-	border: 1px solid black;
+.sheet .head{
 }
 
-.sheet textarea{
-	border:0;
-	background-color:#ffffff;
-	color:#000000;
+.sheet .head .row{
+	height: 50px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* 
+ * bodyの幅高さを可変にしています。
+ * $(".sheet-body").resizable();
+ *  sheetの幅、高さはbodyクラスのものに従っています。
+ */
+.sheet .body{
+	height: 200px;
+	width: 200px;
+	min-width: 200px;
+	min-height: 200px;
+	border-top: 1px groove rgba(0,0,0,1);
+}
+
+.sheet .body .textarea{
+	box-sizing:border-box;
+	overflow: scroll;
+	outline : none;
+	padding: 5px 10px 0px;
+	height: 100%;
+	width: 100%;
 }
