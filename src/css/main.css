@@ -5,27 +5,23 @@ h1{
 
 }
 
+.add{
+	background-color: red;
+    border-radius: 50%;
+    font-size: 50px;
+    cursor: pointer;
+    color: white;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
 
 #toolbar{
 
 }
 
 
-.remove {
 
-	background-color: yellow;
-	border: 1px groove rgba(0,0,0,0.1);
-    cursor: pointer;
-    display: inline-block;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    text-align: center;
-    top: 4px;
-    position: absolute;
-    right: 4px;
-    width: 16px;
-}
 
 
 #workspace{
@@ -48,6 +44,20 @@ h1{
     display: table-cell;
     vertical-align: middle;
 }
+
+.sheet .head .row .remove {
+
+	background-color: yellow;
+	border: 1px groove rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+
+
 
 /* 
  * bodyの幅高さを可変にしています。
