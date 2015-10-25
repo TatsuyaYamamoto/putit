@@ -2,6 +2,9 @@
 $(function() {
 
 	$(".sheet").find(".body").resizable();
+	$("#workspace").on("click", ".remove", function(){
+		$(this).parents(".sheet").remove();
+	})
 
 	$(".sheet").find(".head")
 		.on("mousedown", function(){
