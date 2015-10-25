@@ -36,13 +36,15 @@ h1{
 	background-color: yellow;
 	display: inline-block;
 	box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+	border-left: 1px groove rgba(0,0,0,0.1);
+	border-top: 1px groove rgba(0,0,0,0.1);
 }
 
 .sheet .head{
 }
 
 .sheet .head .row{
-	height: 50px;
+	height: 25px;
     display: table-cell;
     vertical-align: middle;
 }
@@ -57,7 +59,7 @@ h1{
 	width: 200px;
 	min-width: 200px;
 	min-height: 200px;
-	border-top: 1px groove rgba(0,0,0,1);
+	border-top: 1px groove rgba(0,0,0,0.1);
 }
 
 .sheet .body .textarea{
