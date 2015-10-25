@@ -10,6 +10,24 @@ h1{
 
 }
 
+
+.remove {
+
+	background-color: yellow;
+	border: 1px groove rgba(0,0,0,0.1);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    top: 4px;
+    position: absolute;
+    right: 4px;
+    width: 16px;
+}
+
+
 #workspace{
 	/*border: 1px solid black;*/
 }
