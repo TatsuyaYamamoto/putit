@@ -1,5 +1,6 @@
 body{
 	background-image: url(../img/CorkBoard.jpg);
+	margin: 0px;
 }
 h1{
 
@@ -15,11 +16,17 @@ h1{
     width: 50px;
     text-align: center;
     line-height: 50px;
-    float: right;
+    float: left;
+    top: 120px;
+	position: absolute;
+}
+.add:hover{
+    cursor: pointer;
+	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
 }
 
 #toolbar{
-
+	z-index: 1000;
 }
 
 #workspace{
@@ -33,6 +40,9 @@ h1{
 	border-left: 1px groove rgba(0,0,0,0.1);
 	border-top: 1px groove rgba(0,0,0,0.1);
 	position: absolute;
+
+	top: 150px;
+	left: 400px;
 }
 
 .sheet .head{
@@ -48,14 +58,15 @@ h1{
 
 	background-color: yellow;
 	border: 1px groove rgba(0,0,0,0.1);
-    cursor: pointer;
     font-size: 16px;
     text-align: center;
     width: 16px;
     height: 16px;
     line-height: 16px;
 }
-
+.remove:hover{
+    cursor: pointer;
+}
 
 
 /* 
@@ -78,4 +89,45 @@ h1{
 	padding: 5px 10px 0px;
 	height: 100%;
 	width: 100%;
+}
+
+.drawer-handle{
+	background-color: white;
+    border-radius: 0px 10px 10px 0px;
+    height: 50px;
+    width: 50px;
+    top: 50px;
+	position: absolute;
+}
+.drawer-handle:hover{
+    cursor: pointer;
+	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
+}
+
+.hamburger-bar{
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	background: #000;
+	float: right;
+	top: 50%;
+	bottom: 50%;
+}
+.hamburger-bar:before{
+	margin-top: -8px;
+}
+.hamburger-bar:after{
+	margin-top: 4px;
+}
+.hamburger-bar:before, .hamburger-bar:after{
+	display: block;
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	background: #000;
+}
+.hamburger-bar, .hamburger-bar:before, .hamburger-bar:after{
+	width: 30px;
+	height: 3px;
 }

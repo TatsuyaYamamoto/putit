@@ -1,40 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<title>Putit</title>
 
-<title>Putit</title>
+	<!--///// Library /////-->
+	<!-- jQuery -->
+	<script>
+		window.jQuery = window.$ = require('./lib/jquery.min.js');
+	</script>
+	<script src="./lib/jquery-ui/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="lib/jquery-ui/themes/base/jquery-ui.css" />
 
+	<!--///// drower lib /////-->
+	<script src="./lib/sidr/jquery.sidr.min.js"></script>
+	<link rel="stylesheet" href="lib/sidr/jquery.sidr.light.css"/>
 
-<!--///// Library /////-->
-<!-- jQuery -->
-<script>
-	window.jQuery = window.$ = require('./lib/jquery.min.js');
-</script>
-<script src="./lib/jquery-ui/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="lib/jquery-ui/themes/base/jquery-ui.css" />
+	<!--///// development /////-->
+	<!-- script -->
+	<script src="js/main.js"></script>
 
-<!--///// development /////-->
-<!-- script -->
-<script src="js/main.js"></script>
+	<!-- style -->
+	<link rel="stylesheet" href="css/main.css"/>
 
-<!-- style -->
-<link rel="stylesheet" href="css/main.css"/>
-
-<!--///// environment /////-->
-<!-- electron client for development-->
-<script>
-	require('electron-connect').client.create()
-</script>
+	<!--///// environment /////-->
+	<!-- electron client for development-->
+	<script>
+		require('electron-connect').client.create()
+	</script>
 
 </head>
 
 <body>
-	<section>
+
+
+	<nav id="sidr">
+
+		<h1>Putit!</h1>
+
+		<p>
+			Font style
+			<select name="font-family">
+				<option value="arial" style="font-family:arial" selected>arial</option>
+				<option value="Century Gothic" style="font-family:Century Gothic">Century Gothic</option>
+				<option value="Meiryo" style="font-family:Meiryo">Meiryo</option>
+				<option value="Hiragino Maru Gothic Pro" style="font-family:Hiragino Maru Gothic Pro">ヒラギノ角ゴ Pro</option>
+			</select>
+
+			<select name="font-size">
+				<option value="small">Small</option>
+				<option value="medium" selected>Medium</option>
+				<option value="x-large">Large</option>
+			</select>
+		</p>
+
+		<p>
+			Sheet style
+			<select name="sheet-color">
+				<option value="yellow" style="background-color:yellow">yellow</option>
+				<option value="skyblue" style="background-color:skyblue">skyblue</option>
+			</select>
+		</p>
+
+
+		<ul class="sheetList">
+			<li>test1</li>
+			<li>test2</li>
+		</ul>
+
+
+	</nav>
+
+	<section id="toolbar">
+		<div class="drawer-handle">
+			<div class="hamburger-bar"></div>
+		</div>
 		<div class="add">+</div>
 	</section>
-	<section id="toolbar"></section>
 	<section id="workspace"></section>
+
 </body>
 
 </html>
