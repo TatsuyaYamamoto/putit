@@ -40,15 +40,12 @@ h1{
 
 .sheet .head .row .remove {
 
-	background-color: yellow;
 	border: 1px groove rgba(0,0,0,0.1);
-    font-size: 16px;
-    text-align: center;
-    width: 16px;
-    height: 16px;
-    line-height: 16px;
+    width: 18px;
+    height: 18px
+
 }
-.remove:hover{
+.sheet .head .row .remove:hover{
     cursor: pointer;
 }
 
@@ -73,6 +70,24 @@ h1{
 	padding: 5px 10px 0px;
 	height: 100%;
 	width: 100%;
+}
+
+
+/* シート削除アイコン */
+.sheet .head .row .remove:before, .sheet .head .row .remove:after {
+    width: 2px;
+    height: 15px;
+    background: rgba(0,0,0,0.5);
+	content: "";
+	top: 5px;
+	left: 9px;
+	position: absolute;
+}
+.sheet .head .row .remove:before{
+	transform:rotate(-45deg);
+}
+.sheet .head .row .remove:after {
+	transform:rotate(45deg);
 }
 
 /* シート追加アイコン */

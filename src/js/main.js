@@ -74,7 +74,7 @@ function getSheet(sheetId){
 	return	'<div class="sheet" sheet-id="' + sheetId + '">\
 				<div class="head">\
 					<div class="row">\
-						<div class="remove">×</div>\
+						<div class="remove"></div>\
 					</div>\
 				</div>\
 				<div class="body">\
