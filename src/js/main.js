@@ -28,7 +28,7 @@ $(function() {
 		$("#workspace").append(getSheet(sheetId));
 
 		// シートリスト追加
-		$("#sheetList").prepend(getSheetListItem(sheetId));
+		$("#sheetList").append(getSheetListItem(sheetId));
 
 		// 機能付与
 		$(".sheet").find(".body").resizable();
@@ -53,6 +53,7 @@ $(function() {
 		}
 	})
 
+	// ドロワーメニュー -------------------
 
 	$('[name=font-size]').on('change', function(){
 		$('body').css('font-size', $(this).val());
@@ -63,6 +64,10 @@ $(function() {
 	$('[name=sheet-color]').on('change', function(){
 		$('.sheet').css('background-color', $(this).val());
 	})
+
+
+	// ショートカット ---------------------
+
 });
 
 
@@ -85,8 +90,10 @@ function getSheet(sheetId){
 
 function getSheetListItem(sheetId){
 
-	return 	'<li class="sheetListItem" sheet-id="' + sheetId + '">\
-				<div class="remove">delete</div>\
+	return 	'<li>\
+				<div class="sheetListItem" sheet-id="' + sheetId + '">\
+					<div class="remove">delete</div>\
+				</div>\
 			</li>';
 }
 
