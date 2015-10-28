@@ -6,24 +6,8 @@ h1{
 
 }
 
-.add{
-	background-color: red;
-    border-radius: 50%;
-    font-size: 50px;
-    cursor: pointer;
-    color: white;
-    height: 50px;
-    width: 50px;
-    text-align: center;
-    line-height: 50px;
-    float: left;
-    top: 120px;
-	position: absolute;
-}
-.add:hover{
-    cursor: pointer;
-	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
-}
+
+
 
 #toolbar{
 	z-index: 1000;
@@ -91,6 +75,40 @@ h1{
 	width: 100%;
 }
 
+/* シート追加アイコン */
+.add{
+	background-color: red;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    top: 120px;
+	position: absolute;
+}
+.add:hover{
+    cursor: pointer;
+	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
+}
+.add:before {
+    width: 2px;
+    height: 36px;
+    background: #fff;
+	content: "";
+	top: 7px;
+	left: 24px;
+	position: absolute;
+}
+.add:after {
+    width: 36px;
+    height: 2px;
+    background: #fff;
+	content: "";
+	top: 24px;
+	left: 7px;
+	position: absolute;
+}
+
+
+/* ドロワーハンバーガーアイコン */
 .drawer-handle{
 	background-color: white;
     border-radius: 0px 10px 10px 0px;
