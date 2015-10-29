@@ -90,10 +90,8 @@ function getSheet(sheetId){
 
 function getSheetListItem(sheetId){
 
-	return 	'<li>\
-				<div class="sheetListItem" sheet-id="' + sheetId + '">\
-					<div class="remove">delete</div>\
-				</div>\
+	return 	'<li class="sheetListItem" sheet-id="' + sheetId + '">\
+				<div class="remove">delete</div>\
 			</li>';
 }
 
