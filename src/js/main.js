@@ -31,13 +31,7 @@ $(function() {
 	$("#workspace").on("keyup", ".textarea", function(){
 		var sheetId = $(this).parents(".sheet").attr("sheet-id");
 		var text = $(this).text();
-		// var i = text.indexOf("<div>")
-		// if (i != -1){
-		// 	text = text.substr(0, i);
-		// }
-		if(text.length > 10){
-			text = text.substr(0, 10) + "...";
-		}
+		if(text.length > 10) text = text.substr(0, 10) + "...";
 		$("#sheetList")
 			.find('[sheet-id="' + sheetId + '"] > .title')
 			.text(text);		
@@ -53,9 +47,9 @@ $(function() {
 	$("#workspace").contextmenu({
     delegate: ".sheet",
     menu: [
-        {title: "copy", cmd: "copy", uiIcon: "ui-icon-copy"},
-        {title: "delete", cmd: "delete", uiIcon: "ui-icon-trash"},
-        {title: "fix", cmd: "fix", uiIcon: "ui-icon-pin-s"},
+        {title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
+        {title: "Delete", cmd: "delete", uiIcon: "ui-icon-trash"},
+        {title: "Lock", cmd: "lock", uiIcon: "ui-icon-pin-s"},
     ],
     select: function(event, ui) {
         var selectedSheetId = ui.target.parents(".sheet").attr("sheet-id");
@@ -78,7 +72,7 @@ $(function() {
 				$("#sheetList").children('[sheet-id="' + selectedSheetId + '"]').remove();
         		break;
 
-        	case "fix":
+        	case "lock":
         		break;
         }
     }
@@ -133,7 +127,8 @@ function getSheet(sheetId){
 	return	'<div class="sheet" sheet-id="' + sheetId + '">\
 				<div class="head">\
 					<div class="row">\
-						<div class="delete"></div>\
+						<div class="delete ui-icon ui-icon-closethick"></div>\
+						<div class="lock ui-icon ui-icon-pin-w">a</div>\
 					</div>\
 				</div>\
 				<div class="body">\

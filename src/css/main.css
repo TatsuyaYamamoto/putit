@@ -41,20 +41,17 @@ h1{
 }
 
 .sheet .head .row{
-	height: 25px;
-    display: table-cell;
-    vertical-align: middle;
+	height: 15px;
 }
 
 .sheet .head .row .delete {
-	margin-left: 3px;
-	border: 1px groove rgba(0,0,0,0.1);
-    width: 18px;
-    height: 18px
-
-}
-.sheet .head .row .delete:hover{
+	float: right;
     cursor: pointer;
+}
+.sheet .head .row .lock {
+	float: right;
+    cursor: pointer;
+
 }
 
 #sidr #head{
@@ -126,22 +123,8 @@ h1{
 	color: white;
 }
 
-/* シート削除アイコン */
-.sheet .head .row .delete:before, .sheet .head .row .delete:after {
-    width: 1px;
-    height: 15px;
-    background: rgba(0,0,0,1);
-	content: "";
-	top: 4px;
-	left: 12px;
-	position: absolute;
-}
-.sheet .head .row .delete:before{
-	transform:rotate(-45deg);
-}
-.sheet .head .row .delete:after {
-	transform:rotate(45deg);
-}
+
+
 
 /* シート追加アイコン */
 #toolbar .add{
@@ -176,7 +159,7 @@ h1{
 	position: absolute;
 }
 
-/* シート追加アイコン */
+/* シート削除アイコン */
 #toolbar .delete{
 	background-color: red;
     border-radius: 50%;
