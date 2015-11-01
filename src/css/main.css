@@ -46,15 +46,36 @@ h1{
     vertical-align: middle;
 }
 
-.sheet .head .row .remove {
-
+.sheet .head .row .delete {
+	margin-left: 3px;
 	border: 1px groove rgba(0,0,0,0.1);
     width: 18px;
     height: 18px
 
 }
-.sheet .head .row .remove:hover{
+.sheet .head .row .delete:hover{
     cursor: pointer;
+}
+
+#sidr #head{
+
+}
+#sidr #head h1{
+	font-size: 20px;
+	margin: 10px;
+	text-align: center;;
+}
+#sidr #sheetList{
+
+}
+
+#sidr .deleteAttache{
+	cursor: pointer;
+}
+
+#sheetList .sheetListItem .title{
+	display: inline-block;
+	border: 1px groove rgba(0,0,0,1);
 }
 
 
@@ -82,7 +103,9 @@ h1{
 
 
 #sheetList .sheetListItem{
+	cursor: pointer;
 	width: 100%;
+	height: 50px;
 	position: relative;
 	left: 0px;
 	-webkit-animation-name: sheetListItemSlidein;
@@ -94,43 +117,47 @@ h1{
 	}
 }
 
-#sheetList .sheetListItem .remove{
+#sheetList .sheetListItem .delete{
 	display: inline-block;
+	padding: 0px 5px 0px;
 	height: 100%;
-	border: 1px groove rgba(0,0,0,0.1);
+	margin-left: 100px;
+	background-color: red;
+	color: white;
 }
 
 /* シート削除アイコン */
-.sheet .head .row .remove:before, .sheet .head .row .remove:after {
-    width: 2px;
+.sheet .head .row .delete:before, .sheet .head .row .delete:after {
+    width: 1px;
     height: 15px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,1);
 	content: "";
-	top: 5px;
-	left: 9px;
+	top: 4px;
+	left: 12px;
 	position: absolute;
 }
-.sheet .head .row .remove:before{
+.sheet .head .row .delete:before{
 	transform:rotate(-45deg);
 }
-.sheet .head .row .remove:after {
+.sheet .head .row .delete:after {
 	transform:rotate(45deg);
 }
 
 /* シート追加アイコン */
-.add{
-	background-color: red;
+#toolbar .add{
+	background-color: skyblue;
     border-radius: 50%;
     height: 50px;
     width: 50px;
     top: 120px;
+    left: 2px;
 	position: absolute;
 }
-.add:hover{
+#toolbar .add:hover{
     cursor: pointer;
 	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
 }
-.add:before {
+#toolbar .add:before {
     width: 2px;
     height: 36px;
     background: #fff;
@@ -139,7 +166,7 @@ h1{
 	left: 24px;
 	position: absolute;
 }
-.add:after {
+#toolbar .add:after {
     width: 36px;
     height: 2px;
     background: #fff;
@@ -149,6 +176,20 @@ h1{
 	position: absolute;
 }
 
+/* シート追加アイコン */
+#toolbar .delete{
+	background-color: red;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    top: 190px;
+    left: 2px;
+	position: absolute;
+}
+#toolbar .delete:hover{
+    cursor: pointer;
+	box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.5);
+}
 
 /* ドロワーハンバーガーアイコン */
 .drawer-handle{

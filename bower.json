@@ -8,6 +8,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "jquery-ui": "~1.11.4",
-    "sidr": "~1.2.1"
+    "sidr": "~1.2.1",
+    "ui-contextmenu": "~1.11.0"
   }
 }

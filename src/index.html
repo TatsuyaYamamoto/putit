@@ -11,6 +11,7 @@
 	</script>
 	<script src="./lib/jquery-ui/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="lib/jquery-ui/themes/base/jquery-ui.css" />
+	<script src="./lib/jquery.ui-contextmenu.min.js"></script>
 
 	<!--///// drower lib /////-->
 	<script src="./lib/sidr/jquery.sidr.min.js"></script>
@@ -35,10 +36,9 @@
 
 
 	<nav id="sidr">
+		<div id="head">
+			<h1>Putit!</h1>
 
-		<h1>Putit!</h1>
-
-		<div>
 			<p>
 				Font style
 				<select name="font-family">
@@ -61,7 +61,7 @@
 				</select>
 			</p>
 		</div>
-
+		<div class="deleteAttache">ごみばこまーく</div>
 		<ul id="sheetList"></ul>
 
 
@@ -72,6 +72,7 @@
 			<div class="hamburger-bar"></div>
 		</div>
 		<div class="add"></div>
+		<div class="delete"></div>
 	</section>
 	<section id="workspace"></section>
 
