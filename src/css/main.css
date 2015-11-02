@@ -15,6 +15,8 @@ h1{
 
 #workspace{
 	/*border: 1px solid black;*/
+
+	width: 100%;
 }
 
 .sheet{
@@ -38,21 +40,25 @@ h1{
 }
 
 .sheet .head{
-}
-
-.sheet .head .row{
 	height: 15px;
 }
 
-.sheet .head .row .delete {
-	float: right;
+.sheet .head .icon {
     cursor: pointer;
 }
-.sheet .head .row .lock {
-	float: right;
-    cursor: pointer;
+.sheet .head .delete {
+	float: left;
+}
 
+.sheet .head .lock {
+	float: right;
 }
+.sheet .head .unlock {
+	background-color: pink;
+	float: right;
+}
+
+
 
 #sidr #head{
 
@@ -66,13 +72,12 @@ h1{
 
 }
 
-#sidr .deleteAttache{
+#sidr .attacheMenu{
 	cursor: pointer;
 }
 
 #sheetList .sheetListItem .title{
 	display: inline-block;
-	border: 1px groove rgba(0,0,0,1);
 }
 
 
@@ -114,11 +119,27 @@ h1{
 	}
 }
 
-#sheetList .sheetListItem .delete{
-	display: inline-block;
+#sheetList .sheetListItem .copy{
+	float: right;
+	display: none;
 	padding: 0px 5px 0px;
 	height: 100%;
-	margin-left: 100px;
+	background-color: skyblue;
+	color: white;
+}
+#sheetList .sheetListItem .lock{
+	display: none;
+	float: right;
+	padding: 0px 5px 0px;
+	height: 100%;
+	background-color: green;
+	color: white;
+}
+#sheetList .sheetListItem .delete{
+	display: none;
+	float: right;
+	padding: 0px 5px 0px;
+	height: 100%;
 	background-color: red;
 	color: white;
 }
