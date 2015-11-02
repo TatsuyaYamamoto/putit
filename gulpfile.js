@@ -27,26 +27,17 @@ gulp.task('watch', function(){
 			_config.dir.src + 'js/*',
 			_config.dir.src + 'css/*'
 		]
-		, ['liveReload']
+		, ['electron_reload']
 	)
 
 	// BrowserProcessが読み込むファイルが変更されたとき
-	gulp.watch(_config.dir.src + 'index.js', ['liveRestart'])
+	gulp.watch(_config.dir.src + 'index.js', ['electron_restart'])
 })
-
-gulp.task('liveReload', function(callback){
-	runSequence('dist', 'electron_reload', callback)
-})
-
-gulp.task('liveRestart', function(callback){
-	runSequence('dist', 'electron_restart', callback)
-})
-
 
 /* dist dirタスク　*/
 gulp.task('dist', function(callback){
 	runSequence(
-		// 'del_dist', 
+		'del_dist', 
 		[
 			'dist_core',
 			'dist_js',
@@ -72,13 +63,14 @@ gulp.task('electron_reload', function(){
 })
 gulp.task('electron_package', function (done) {
 	electron_packager({
-		dir: _config.dir.dist,           // アプリケーションのパッケージとなるディレクトリ
-		out: _config.dir.appFile,    // .app や .exeの出力先ディレクトリ
-		name: _config.appName,      // アプリケーション名
-		arch: 'x64',              // CPU種別. x64 or ia32
-		platform: 'darwin',       // OS種別. darwin or win32 or linux
-		version: _config.system.version,         // Electronのversion
-		asar: true					// アーカイブ化
+		dir: _config.dir.dist,
+		out: _config.dir.appFile,
+		name: _config.appName,
+		arch: 'x64',						// CPU種別. x64 or ia32
+		platform: 'darwin',					// OS種別. darwin or win32 or linux
+		version: _config.system.version,	// Electronのversion
+		asar: true,							// アーカイブ化
+		icon: "icon.icns"
 	}, function (err, path) {
 		// 追加でパッケージに手を加えたければ, path配下を適宜いじる
 		done();
