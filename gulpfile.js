@@ -72,18 +72,18 @@ gulp.task('electron_reload', function(){
 })
 gulp.task('electron_package', function (done) {
 	electron_packager({
-		dir: _config.dir.dist,              // アプリケーションのパッケージとなるディレクトリ
+		dir: _config.dir.dist,           // アプリケーションのパッケージとなるディレクトリ
 		out: _config.dir.appFile,    // .app や .exeの出力先ディレクトリ
 		name: _config.appName,      // アプリケーション名
 		arch: 'x64',              // CPU種別. x64 or ia32
 		platform: 'darwin',       // OS種別. darwin or win32 or linux
-		version: _config.system.version         // Electronのversion
+		version: _config.system.version,         // Electronのversion
+		asar: true					// アーカイブ化
 	}, function (err, path) {
 		// 追加でパッケージに手を加えたければ, path配下を適宜いじる
 		done();
 	});
 });
-
 
 // files: delete dist dir -------------------------------------------------
 gulp.task('del_dist', function(){
@@ -98,6 +98,9 @@ gulp.task('dist_core', function(){
 	gulp.src(_config.dir.src + 'index.html')
 		.pipe(gulp.dest(_config.dir.dist));
 	gulp.src(_config.dir.src + 'index.js')
+		.pipe(plumber())
+		.pipe(gulp.dest(_config.dir.dist));
+	gulp.src(_config.dir.src + 'package.json')
 		.pipe(plumber())
 		.pipe(gulp.dest(_config.dir.dist));
 });
