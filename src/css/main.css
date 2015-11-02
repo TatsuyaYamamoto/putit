@@ -76,8 +76,23 @@ h1{
 	cursor: pointer;
 }
 
+#sheetList .sheetListItem{
+	position: relative;
+}
 #sheetList .sheetListItem .title{
 	display: inline-block;
+	float: 	left;
+	position: absolute;
+	font-size: 	20px;
+}
+#sheetList .sheetListItem .date{
+	position: absolute;
+
+	bottom: 0px;
+	left: 100px;
+	display: inline-block;
+	float: 		left;
+	font-size: 	10px;
 }
 
 

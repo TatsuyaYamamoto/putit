@@ -55,11 +55,13 @@ $(function() {
 	$("#workspace").on("keyup", ".textarea", function(){
 		var selectedSheetId = $(this).parents(".sheet").attr("sheet-id");
 		updateSheet(selectedSheetId);
+		setNow(selectedSheetId)
 	})
 
 	// シート追加ボタン
 	$(".add").on("click", function(){
-		addSheet();
+		var sheetId = addSheet();
+		setNow(sheetId)
 	})
 
 
@@ -119,6 +121,11 @@ $(function() {
 
 
 // 共通機能 -----------------
+function setNow(sheetId){
+	var now = dateFormat.format(new Date(), 'MM/dd hh:mm');
+	$('[sheet-id="' + sheetId + '"] >> .MMddhhmm').text(now);
+}
+
 
 function addSheet(){
 
@@ -214,6 +221,7 @@ function getSheetListItem(sheetId){
 
 	return 	'<li class="sheetListItem" sheet-id="' + sheetId + '">\
 				<div class="title"></div>\
+				<div class="date">last update date : <span class="MMddhhmm">a</span></div>\
 				<div class="copy">Copy</div>\
 				<div class="lock">Lock</div>\
 				<div class="delete">Delete</div>\
@@ -226,3 +234,20 @@ function getUUID(){
     }
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
+
+dateFormat = {
+  fmt : {
+    "yyyy": function(date) { return date.getFullYear() + ''; },
+    "MM": function(date) { return ('0' + (date.getMonth() + 1)).slice(-2); },
+    "dd": function(date) { return ('0' + date.getDate()).slice(-2); },
+    "hh": function(date) { return ('0' + date.getHours()).slice(-2); },
+    "mm": function(date) { return ('0' + date.getMinutes()).slice(-2); },
+    "ss": function(date) { return ('0' + date.getSeconds()).slice(-2); }
+  },
+  format:function dateFormat (date, format) {
+    var result = format;
+    for (var key in this.fmt)
+      result = result.replace(key, this.fmt[key](date));
+    return result;
+  }
+};
