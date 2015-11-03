@@ -13,17 +13,8 @@ $(function() {
 	})
 
 	// 削除ボタン
-	$("#sheetList").on("click", ".delete", function(){
-		var selectedSheetId = $(this).parents(".sheetListItem").attr("sheet-id");
 		deleteSheet(selectedSheetId);
 	})
-
-	// コピーボタン
-	$("#sheetList").on("click", ".copy", function(){
-		var selectedSheetId = $(this).parents(".sheetListItem").attr("sheet-id");
-		copySheet(selectedSheetId);
-	})
-
 	// ロック
 	$("#workspace").on("click", ".lock", function(){
 		var selectedSheetId = $(this).parents(".sheet").attr("sheet-id");
@@ -41,19 +32,6 @@ $(function() {
 		var selectedSheetId = $(this).attr("sheet-id");
 		toForeground(selectedSheetId)
 	})
-
-
-	// シートリストアイテムのdeleteボタンを表示させる
-	$("#sidr").on("click", ".attacheMenu", function(){
-		$(".sheetListItem .copy").each(function(i, elem) {
-			$(elem).css('display', 'inline-block')
-		});
-		$(".sheetListItem .lock").each(function(i, elem) {
-			$(elem).css('display', 'inline-block')
-		});
-		$(".sheetListItem .delete").each(function(i, elem) {
-			$(elem).css('display', 'inline-block')
-		});
 	})
 
 	// シート内のテキストとsheetListItem内のテキストを同期させる
@@ -105,17 +83,6 @@ $(function() {
 	    }
 	});
 
-
-	// ドロワーメニュー -------------------
-
-	$('[name=font-size]').on('change', function(){
-		$('body').css('font-size', $(this).val());
-	})
-	$('[name=font-family]').on('change', function(){
-		$('body').css('font-family', $(this).val());
-	})
-	$('[name=sheet-color]').on('change', function(){
-		$('.sheet').css('background-color', $(this).val());
 	})
 });
 
@@ -242,10 +209,7 @@ function getSheetListItem(sheetId){
 
 	return 	'<li class="sheetListItem" sheet-id="' + sheetId + '">\
 				<div class="title"></div>\
-				<div class="date">last update date : <span class="MMddhhmm">a</span></div>\
-				<div class="copy">Copy</div>\
-				<div class="lock">Lock</div>\
-				<div class="delete">Delete</div>\
+				<div class="date">last update date : <span class="MMddhhmm"></span></div>\
 			</li>';
 }
 
