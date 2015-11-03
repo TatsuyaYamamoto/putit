@@ -54,13 +54,40 @@ $(function() {
 		toForeground(selectedSheetId);
 	})
 
-	// 右クリック操作 -------------------
+	/* コンテキストメニュー */
 	$("#workspace").contextmenu({
 	    delegate: ".sheet",
 	    menu: [
 	        {title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
 	        {title: "Delete", cmd: "delete", uiIcon: "ui-icon-trash"},
 	        {title: "Lock/Unlock", cmd: "lock", uiIcon: "ui-icon-pin-s"},
+            {title: "----"},
+	        {title: "font-family", children: [
+	            {title: "arial", action: function(){
+					ui.target.parents(".sheet").css('font-family', "arial");
+	            }},
+	            {title: "CenturyGothic", action: function(){
+					ui.target.parents(".sheet").css('font-family', "Century Gothic");
+	            }},
+	            {title: "Meiryo", action: function(){
+					ui.target.parents(".sheet").css('font-family', "Meiryo");
+	            }},
+	            {title: "HiraginoMarugoPro", action: function(){
+					ui.target.parents(".sheet").css('font-family', "Hiragino Maru Gothic Pro");
+	            }},
+            ]},
+            {title: "----"},
+	        {title: "font-size", children: [
+	            {title: "small", action: function(event, ui){
+					ui.target.parents(".sheet").css('font-size', "small");
+	            }},
+	            {title: "medium", action: function(event, ui){
+					ui.target.parents(".sheet").css('font-size', "medium");
+	            }},
+	            {title: "x-large", action: function(event, ui){
+					ui.target.parents(".sheet").css('font-size', "x-large");
+	            }}
+            ]}
 	    ],
 	    select: function(event, ui) {
 	        var selectedSheetId = ui.target.parents(".sheet").attr("sheet-id");

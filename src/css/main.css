@@ -58,7 +58,10 @@ h1{
 	float: right;
 }
 
-
+/*コンテキストメニュー*/
+.ui-menu{
+	font-size: 15px;
+}
 
 #sidr #head{
 
