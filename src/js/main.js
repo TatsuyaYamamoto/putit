@@ -1,4 +1,3 @@
-
 $(function() {
 
 	// ドロワーメニューイベント
@@ -36,6 +35,13 @@ $(function() {
 		unlockSheet(selectedSheetId);
 	})
 
+	// シートリストアイテムをクリック
+	// シートを最前面に表示する
+	$("#sheetList").on("click", ".sheetListItem", function(){
+		var selectedSheetId = $(this).attr("sheet-id");
+		toForeground(selectedSheetId)
+	})
+
 
 	// シートリストアイテムのdeleteボタンを表示させる
 	$("#sidr").on("click", ".attacheMenu", function(){
@@ -61,9 +67,14 @@ $(function() {
 	// シート追加ボタン
 	$(".add").on("click", function(){
 		var sheetId = addSheet();
+		toForeground(sheetId)
 		setNow(sheetId)
 	})
 
+	$("#workspace").on("mousedown", ".sheet", function(){
+		var selectedSheetId = $(this).attr("sheet-id");
+		toForeground(selectedSheetId);
+	})
 
 	// 右クリック操作 -------------------
 	$("#workspace").contextmenu({
@@ -73,12 +84,6 @@ $(function() {
 	        {title: "Delete", cmd: "delete", uiIcon: "ui-icon-trash"},
 	        {title: "Lock/Unlock", cmd: "lock", uiIcon: "ui-icon-pin-s"},
 	    ],
-	    beforeOpen: function(event, ui) {
-	    	for ( var n in ui.target.cmd ) {
-	    		console.log(n)
-
-			}
-		},
 	    select: function(event, ui) {
 	        var selectedSheetId = ui.target.parents(".sheet").attr("sheet-id");
 	        switch(ui.cmd){
@@ -112,18 +117,35 @@ $(function() {
 	$('[name=sheet-color]').on('change', function(){
 		$('.sheet').css('background-color', $(this).val());
 	})
-
-
-	// ショートカット ---------------------
-
 });
 
 
 
 // 共通機能 -----------------
+function toForeground(sheetId){
+	var numberOfSheets = $("#workspace .sheet").length
+	$("#workspace").children('[sheet-id="' + sheetId + '"]').css("z-index", numberOfSheets);
+
+	var sheets = []
+	$(".sheet").each(function(i){
+		sheets[i] = {
+			obj: this,
+			zIndex: $(this).css("z-index"),
+		}
+	})
+
+	sheets.sort(function compareNumbers(a, b) {
+		return a.zIndex - b.zIndex;
+	});
+
+	sheets.forEach(function(value,index){
+		$(value.obj).css("z-index", index)
+	});
+}
+
 function setNow(sheetId){
 	var now = dateFormat.format(new Date(), 'MM/dd hh:mm');
-	$('[sheet-id="' + sheetId + '"] >> .MMddhhmm').text(now);
+	$('[sheet-id="' + sheetId + '"] .MMddhhmm').text(now);
 }
 
 
@@ -140,8 +162,7 @@ function addSheet(){
 	$(".sheet").draggable({
 					disabled: false,
 					handle : '.head',
-					scroll : false,
-					stack : ".sheet"
+					scroll : false
 				})
 	return sheetId;
 }
@@ -187,7 +208,7 @@ function deleteSheet(sheetId){
 function copySheet(sheetId){
 	var text = $('[sheet-id="' + sheetId + '"]').find(".textarea").text();
 	var addSheetId = addSheet();
-	$('[sheet-id="' + addSheetId + '"] >> .textarea').text(text);
+	$('[sheet-id="' + addSheetId + '"] .textarea').text(text);
 	if(text.length > 10) text = text.substr(0, 10) + "...";
 	$("#sheetList")
 		.find('[sheet-id="' + addSheetId + '"] > .title')
