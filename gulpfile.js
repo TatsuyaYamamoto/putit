@@ -14,9 +14,22 @@ var _config		= require('./config.json');
 
 gulp.task('default', ['watch', 'electron_start']);
 
-
 /* electron packagerタスク */
-gulp.task('package', ['electron_package'])
+gulp.task('package', function(callback){
+	runSequence(
+		'del_dist', 
+		[
+			'dist_core',
+			'dist_js',
+			'dist_lib',
+			'dist_css',
+			'dist_img',
+			'dist_sound'
+		], 
+		'electron_package',
+		callback
+	)
+})
 
 /* 監視タスク　*/
 gulp.task('watch', function(){
@@ -32,22 +45,6 @@ gulp.task('watch', function(){
 
 	// BrowserProcessが読み込むファイルが変更されたとき
 	gulp.watch(_config.dir.src + 'index.js', ['electron_restart'])
-})
-
-/* dist dirタスク　*/
-gulp.task('dist', function(callback){
-	runSequence(
-		'del_dist', 
-		[
-			'dist_core',
-			'dist_js',
-			'dist_lib',
-			'dist_css',
-			'dist_img',
-			'dist_sound'
-		], 
-		callback
-	)
 })
 
 // electron task -------------------------------------------------
