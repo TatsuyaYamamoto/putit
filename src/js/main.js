@@ -70,16 +70,16 @@ $(function() {
 	        {title: "Lock/Unlock", cmd: "lock", uiIcon: "ui-icon-pin-s"},
             {title: "----"},
 	        {title: "font-family", children: [
-	            {title: "arial", action: function(){
+	            {title: "arial", action: function(event, ui){
 					ui.target.parents(".sheet").css('font-family', "arial");
 	            }},
-	            {title: "CenturyGothic", action: function(){
+	            {title: "CenturyGothic", action: function(event, ui){
 					ui.target.parents(".sheet").css('font-family', "Century Gothic");
 	            }},
-	            {title: "Meiryo", action: function(){
+	            {title: "Meiryo", action: function(event, ui){
 					ui.target.parents(".sheet").css('font-family', "Meiryo");
 	            }},
-	            {title: "HiraginoMarugoPro", action: function(){
+	            {title: "HiraginoMarugoPro", action: function(event, ui){
 					ui.target.parents(".sheet").css('font-family', "Hiragino Maru Gothic Pro");
 	            }},
             ]},
@@ -240,6 +240,8 @@ function load(){
 		data.sheets.forEach(function(sheet,index){
 			addSheet(sheet.id);
 			$("#workspace").children('[sheet-id="' + sheet.id + '"]')
+				.css('font-family', sheet.fontFamily)
+				.css("font-size", sheet.fontSize)
 				.css("top", sheet.top)
 				.css("left", sheet.left)
 				.css("z-index", sheet.zIndex)
@@ -267,6 +269,8 @@ function save(){
 		var sheet = {
 			id: sheetId,
 			text: $(this).find(".textarea").html(),
+			fontFamily: $(this).css('font-family'),
+			fontSize: $(this).css('font-size'),
 			zIndex: $(this).css("z-index"),
 			top: $(this).css("top"),
 			left: $(this).css("left"),
