@@ -1,1 +1,2 @@
 ./package/putit-darwin-x64/putit.app filter=lfs diff=lfs merge=lfs -text
+putit.app filter=lfs diff=lfs merge=lfs -text
