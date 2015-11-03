@@ -1,18 +1,18 @@
 $(function() {
 
-	// ドロワーメニューイベント
-	$(".drawer-handle").sidr({
-		speed: 100,
-		body: "section#toolbar"
-	});
+	// ローカルストレージのdataをロードする
+	load();
 
+	// 操作後にシステムの状態をローカルストレージに保存する
+	$("body").on("mouseup keyup", function(){
+		save()
+	})
+
+
+	/* シート内イベント */
 	// 削除ボタン
 	$("#workspace").on("click", ".delete", function(){
 		var selectedSheetId = $(this).parents(".sheet").attr("sheet-id");
-		deleteSheet(selectedSheetId);
-	})
-
-	// 削除ボタン
 		deleteSheet(selectedSheetId);
 	})
 	// ロック
@@ -25,15 +25,6 @@ $(function() {
 		var selectedSheetId = $(this).parents(".sheet").attr("sheet-id");
 		unlockSheet(selectedSheetId);
 	})
-
-	// シートリストアイテムをクリック
-	// シートを最前面に表示する
-	$("#sheetList").on("click", ".sheetListItem", function(){
-		var selectedSheetId = $(this).attr("sheet-id");
-		toForeground(selectedSheetId)
-	})
-	})
-
 	// シート内のテキストとsheetListItem内のテキストを同期させる
 	// 同期させる文字は"10文字以下""1行目のみ"
 	$("#workspace").on("keyup", ".textarea", function(){
@@ -42,17 +33,33 @@ $(function() {
 		setNow(selectedSheetId)
 	})
 
-	// シート追加ボタン
-	$(".add").on("click", function(){
-		var sheetId = addSheet();
-		toForeground(sheetId)
-		setNow(sheetId)
+	/* ドロワーメニューイベント */
+	// シートリストアイテムをクリック
+	// シートを最前面に表示する
+	$("#sheetList").on("click", ".sheetListItem", function(){
+		var selectedSheetId = $(this).attr("sheet-id");
+		toForeground(selectedSheetId)
+	})
+	$('[name=font-size]').on('change', function(){
+		$('body').css('font-size', $(this).val());
+	})
+	$('[name=font-family]').on('change', function(){
+		$('body').css('font-family', $(this).val());
 	})
 
-	$("#workspace").on("mousedown", ".sheet", function(){
-		var selectedSheetId = $(this).attr("sheet-id");
-		toForeground(selectedSheetId);
+	/* ツールバーアイコン */
+	// シート追加ボタン
+	$(".add").on("click", function(){
+		var addSheetId = getUUID();
+		addSheet(addSheetId);
+		toForeground(addSheetId)
+		setNow(addSheetId)
 	})
+	// ドロワーメニュー
+	$(".drawer-handle").sidr({
+		speed: 100,
+		body: "section#toolbar"
+	});
 
 	/* コンテキストメニュー */
 	$("#workspace").contextmenu({
@@ -110,6 +117,10 @@ $(function() {
 	    }
 	});
 
+	/* シート<-->シートリストアイテム間のtextの同期 */
+	$("#workspace").on("mousedown", ".sheet", function(){
+		var selectedSheetId = $(this).attr("sheet-id");
+		toForeground(selectedSheetId);
 	})
 });
 
@@ -138,27 +149,25 @@ function toForeground(sheetId){
 }
 
 function setNow(sheetId){
-	var now = dateFormat.format(new Date(), 'MM/dd hh:mm');
+	var now = dateFormat(new Date(), 'MM/dd hh:mm');
 	$('[sheet-id="' + sheetId + '"] .MMddhhmm').text(now);
 }
 
 
-function addSheet(){
+// シート操作 ----------------------------------------------
+function addSheet(sheetId){
 
-	var sheetId = getUUID()
 	// シート追加
-	$("#workspace").append(getSheet(sheetId));
+	$("#workspace").prepend(getSheet(sheetId));
 	// シートリスト追加
-	$("#sheetList").append(getSheetListItem(sheetId));
+	$("#sheetList").prepend(getSheetListItem(sheetId));
 	// 機能付与
 	$(".sheet .body").resizable({ autoHide : true });
-
 	$(".sheet").draggable({
 					disabled: false,
 					handle : '.head',
 					scroll : false
 				})
-	return sheetId;
 }
 
 function lockSheet(sheetId){
@@ -201,7 +210,8 @@ function deleteSheet(sheetId){
 
 function copySheet(sheetId){
 	var text = $('[sheet-id="' + sheetId + '"]').find(".textarea").text();
-	var addSheetId = addSheet();
+	var addSheetId = getUUID();
+	addSheet(addSheetId);
 	$('[sheet-id="' + addSheetId + '"] .textarea').text(text);
 	if(text.length > 10) text = text.substr(0, 10) + "...";
 	$("#sheetList")
@@ -216,6 +226,56 @@ function updateSheet(sheetId){
 	$("#sheetList")
 		.find('[sheet-id="' + sheetId + '"] > .title')
 		.text(text);
+}
+
+// システム情報の保存機能 ---------------------------------------
+function load(){
+	var data = JSON.parse(localStorage.getItem("PutitData"))
+	if(data !==null){
+		$('[name=font-family]').val(data.config.fontFamily);
+		$('body').css('font-family', data.config.fontFamily);
+		$('[name=font-size]').val(data.config.fontSize);
+		$('body').css('font-size', data.config.fontSize);
+
+		data.sheets.forEach(function(sheet,index){
+			addSheet(sheet.id);
+			$("#workspace").children('[sheet-id="' + sheet.id + '"]')
+				.css("top", sheet.top)
+				.css("left", sheet.left)
+				.css("z-index", sheet.zIndex)
+				.find(".textarea")
+					.html(sheet.text);
+			$('#sheetList [sheet-id="' + sheet.id + '"] .MMddhhmm').text(sheet.lastUpdate);
+			updateSheet(sheet.id);
+		})
+	}
+}
+
+function save(){
+
+	console.log("saved!")
+	var data = {
+		config: {
+			fontFamily: $('[name=font-family] option:selected').val(),
+			fontSize: $('[name=font-size] option:selected').val()
+		},
+		sheets: []
+	}
+
+	$(".sheet").each(function(i){
+		var sheetId = $(this).attr("sheet-id");
+		var sheet = {
+			id: sheetId,
+			text: $(this).find(".textarea").html(),
+			zIndex: $(this).css("z-index"),
+			top: $(this).css("top"),
+			left: $(this).css("left"),
+			lastUpdate: $('#sheetList [sheet-id="' + sheetId + '"] .MMddhhmm').text(),
+			isLock: $(this).find(".unlock").is('*')?true:false
+		}
+		data.sheets.push(sheet);
+	})
+	localStorage.setItem("PutitData", JSON.stringify(data))
 }
 
 // Util function ---------------------------
@@ -247,19 +307,19 @@ function getUUID(){
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
 
-dateFormat = {
-  fmt : {
-    "yyyy": function(date) { return date.getFullYear() + ''; },
-    "MM": function(date) { return ('0' + (date.getMonth() + 1)).slice(-2); },
-    "dd": function(date) { return ('0' + date.getDate()).slice(-2); },
-    "hh": function(date) { return ('0' + date.getHours()).slice(-2); },
-    "mm": function(date) { return ('0' + date.getMinutes()).slice(-2); },
-    "ss": function(date) { return ('0' + date.getSeconds()).slice(-2); }
-  },
-  format:function dateFormat (date, format) {
-    var result = format;
-    for (var key in this.fmt)
-      result = result.replace(key, this.fmt[key](date));
-    return result;
-  }
-};
+
+function dateFormat (date, format) {
+	var result = format;
+	for (var key in _fmt)
+		result = result.replace(key, _fmt[key](date));
+	return result;
+}
+
+var _fmt = {
+	"yyyy": function(date) { return date.getFullYear() + ''; },
+	"MM": function(date) { return ('0' + (date.getMonth() + 1)).slice(-2); },
+	"dd": function(date) { return ('0' + date.getDate()).slice(-2); },
+	"hh": function(date) { return ('0' + date.getHours()).slice(-2); },
+	"mm": function(date) { return ('0' + date.getMinutes()).slice(-2); },
+	"ss": function(date) { return ('0' + date.getSeconds()).slice(-2); }
+}
