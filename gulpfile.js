@@ -17,7 +17,7 @@ gulp.task('default', ['watch', 'electron_start']);
 /* electron packagerタスク */
 gulp.task('package', function(callback){
 	runSequence(
-		'del_dist', 
+		'del_package', 
 		[
 			'dist_core',
 			'dist_js',
@@ -74,9 +74,9 @@ gulp.task('electron_package', function (done) {
 	});
 });
 
-// files: delete dist dir -------------------------------------------------
-gulp.task('del_dist', function(){
-	del([_config.dir.dist])
+// files: delete dir -------------------------------------------------
+gulp.task('del_package', function(){
+	del([_config.dir.appFile+'/*'])
 });
 
 // files: src --> dist -------------------------------------------------
