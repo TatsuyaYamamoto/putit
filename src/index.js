@@ -31,10 +31,6 @@ _app.on('ready', function() {
     _menu.setApplicationMenu(menu);
 });
 
-// ipc event
-
-
-
 // アプリケーションメニュー ------------------------------------------
 var menu = _menu.buildFromTemplate([
   {
@@ -171,7 +167,7 @@ var menu = _menu.buildFromTemplate([
       },
       {
         label: 'Minimize',
-        accelerator: 'CmdOrCtrl+M',
+        accelerator: 'Command+Shift+Enter',
         role: 'minimize'
       },
     ]

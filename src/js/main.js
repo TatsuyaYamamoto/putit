@@ -11,23 +11,27 @@ _ipc.on('newSheet', function(msg) {
 // シートコピー
 _ipc.on('copySheet', function(msg) {
 	var sheets = getAllSheets();
-	var frontSheetId = sheets[sheets.length-1].id;
-
-	copySheet(frontSheetId);
+	if(sheets[0]){
+		var frontSheetId = sheets[sheets.length-1].id;
+		copySheet(frontSheetId);
+	}
 });
 // シート削除
 _ipc.on('deleteSheet', function(msg) {
 	var sheets = getAllSheets();
-	var frontSheetId = sheets[sheets.length-1].id;
+	if(sheets[0]){
+		var frontSheetId = sheets[sheets.length-1].id;
+		deleteSheet(frontSheetId);
+	}
 
-	deleteSheet(frontSheetId);
 });
 // シートロック
 _ipc.on('lockSheet', function(msg) {
 	var sheets = getAllSheets();
-	var frontSheetId = sheets[sheets.length-1].id;
-
-	lockSheet(frontSheetId);
+	if(sheets[0]){
+		var frontSheetId = sheets[sheets.length-1].id;
+		lockSheet(frontSheetId);
+	}
 });
 
 // jqueryイベント ----------------------------------------
@@ -82,7 +86,7 @@ $(function() {
 
 	/* ツールバーアイコン */
 	// シート追加ボタン
-	$(".add").on("click", function(){
+	$(".add").on("click", function(e){
 		var addSheetId = getUUID();
 		addSheet(addSheetId);
 		toForeground(addSheetId)
@@ -180,6 +184,11 @@ function setNow(sheetId){
 // シート操作 --------------------------------------------------------------------
 function addSheet(sheetId){
 
+	var sheets = getAllSheets();
+	if(sheets[0]){
+		var top = $(sheets[sheets.length-1].obj).css("top")
+	}
+
 	// シート追加
 	$("#workspace").append(getSheet(sheetId));
 	// シートリスト追加
@@ -191,6 +200,8 @@ function addSheet(sheetId){
 					handle : '.head',
 					scroll : false
 				})
+	// シートにフォーカスをあてる
+	$(".sheet").find(".textarea").focus().css("top", "100pt");
 }
 
 function lockSheet(sheetId){
