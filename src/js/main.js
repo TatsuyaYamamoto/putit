@@ -34,6 +34,12 @@ _ipc.on('lockSheet', function(msg) {
 	}
 });
 
+// ドロワーメニューtoggle
+_ipc.on('sidrToggle', function(msg) {
+	$.sidr("toggle")
+});
+
+
 // jqueryイベント ----------------------------------------
 $(function() {
 

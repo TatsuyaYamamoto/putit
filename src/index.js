@@ -157,7 +157,7 @@ var menu = _menu.buildFromTemplate([
         label: 'SheetList', 
         accelerator: 'CmdOrCtrl+L',
         click: function(item, focusedWindow) {
-
+          _mainWindow.webContents.send('sidrToggle');
         }
       },
       {
