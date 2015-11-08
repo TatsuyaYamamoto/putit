@@ -1,3 +1,36 @@
+// アプリケーションメニュー(MainProcess) イベント ----------------------------------------
+var _ipc = require('ipc');
+
+// シート作成
+_ipc.on('newSheet', function(msg) {
+	var addSheetId = getUUID();
+	addSheet(addSheetId);
+	toForeground(addSheetId)
+	setNow(addSheetId)
+});
+// シートコピー
+_ipc.on('copySheet', function(msg) {
+	var sheets = getAllSheets();
+	var frontSheetId = sheets[sheets.length-1].id;
+
+	copySheet(frontSheetId);
+});
+// シート削除
+_ipc.on('deleteSheet', function(msg) {
+	var sheets = getAllSheets();
+	var frontSheetId = sheets[sheets.length-1].id;
+
+	deleteSheet(frontSheetId);
+});
+// シートロック
+_ipc.on('lockSheet', function(msg) {
+	var sheets = getAllSheets();
+	var frontSheetId = sheets[sheets.length-1].id;
+
+	lockSheet(frontSheetId);
+});
+
+// jqueryイベント ----------------------------------------
 $(function() {
 
 	// ローカルストレージのdataをロードする
@@ -126,22 +159,12 @@ $(function() {
 
 
 
-// 共通機能 -----------------
+// 共通機能 --------------------------------------------------------------------
 function toForeground(sheetId){
 	var numberOfSheets = $("#workspace .sheet").length
 	$("#workspace").children('[sheet-id="' + sheetId + '"]').css("z-index", numberOfSheets);
 
-	var sheets = []
-	$(".sheet").each(function(i){
-		sheets[i] = {
-			obj: this,
-			zIndex: $(this).css("z-index"),
-		}
-	})
-
-	sheets.sort(function compareNumbers(a, b) {
-		return a.zIndex - b.zIndex;
-	});
+	var sheets = getAllSheets();
 
 	sheets.forEach(function(value,index){
 		$(value.obj).css("z-index", index)
@@ -154,13 +177,13 @@ function setNow(sheetId){
 }
 
 
-// シート操作 ----------------------------------------------
+// シート操作 --------------------------------------------------------------------
 function addSheet(sheetId){
 
 	// シート追加
-	$("#workspace").prepend(getSheet(sheetId));
+	$("#workspace").append(getSheet(sheetId));
 	// シートリスト追加
-	$("#sheetList").prepend(getSheetListItem(sheetId));
+	$("#sheetList").append(getSheetListItem(sheetId));
 	// 機能付与
 	$(".sheet .body").resizable({ autoHide : true });
 	$(".sheet").draggable({
@@ -228,7 +251,24 @@ function updateSheet(sheetId){
 		.text(text);
 }
 
-// システム情報の保存機能 ---------------------------------------
+function getAllSheets(){
+	var sheets = []
+	$(".sheet").each(function(i){
+		sheets[i] = {
+			obj: this,
+			id: $(this).attr("sheet-id"),
+			zIndex: $(this).css("z-index")
+		}
+	})
+
+	sheets.sort(function compareNumbers(a, b) {
+		return a.zIndex - b.zIndex;
+	});
+
+	return sheets;
+}
+
+// システム情報の保存機能 ---------------------------------------------------
 function load(){
 	var data = JSON.parse(localStorage.getItem("PutitData"))
 	if(data !==null){
@@ -282,7 +322,7 @@ function save(){
 	localStorage.setItem("PutitData", JSON.stringify(data))
 }
 
-// Util function ---------------------------
+// Util function --------------------------------------------------------------------
 function getSheet(sheetId){
 
 	return	'<div class="sheet" sheet-id="' + sheetId + '">\

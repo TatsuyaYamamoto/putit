@@ -1,36 +1,53 @@
 'use strict';
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var Menu = require('menu');
+var _app    = require('app');
+var _browserWindow 
+            = require('browser-window');
+var _menu   = require('menu');
+var _ipc     = require('ipc');
 
 require('crash-reporter').start();
 
-var mainWindow = null;
+var _mainWindow = null;
 
-app.on('window-all-closed', function() {
-	// if (process.platform != 'darwin'){
-		app.quit();
-	// }
+_app.on('window-all-closed', function() {
+	if (process.platform != 'darwin'){
+		_app.quit();
+	}
 });
 
-app.on('ready', function() {
+_app.on('ready', function() {
+    // ブラウザ(Chromium)の起動, 初期画面のロード
+    _mainWindow = new _browserWindow({
+      width: 800,
+      height: 600,
+      fullscreen: true
+    });
+    _mainWindow.loadUrl('file://' + __dirname + '/index.html');
+    // _mainWindow.toggleDevTools();
+    _mainWindow.on('closed', function() {
+        _mainWindow = null;
+    });
 
-	// ブラウザ(Chromium)の起動, 初期画面のロード
-	mainWindow = new BrowserWindow({width: 800, height: 600});
-	mainWindow.loadUrl('file://' + __dirname + '/index.html');
-// アプリケーションメニュー
-var menu = Menu.buildFromTemplate([
+    _menu.setApplicationMenu(menu);
+});
+
+// ipc event
+
+
+
+// アプリケーションメニュー ------------------------------------------
+var menu = _menu.buildFromTemplate([
   {
     label: 'Sample',  /* Menu1 */
     submenu: [
       {
-        label: 'About ' + app.getName(),
+        label: 'About ' + _app.getName(),
         selector: "orderFrontStandardAboutPanel:"
       },
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click: function() { app.quit(); }
+        click: function() { _app.quit(); }
       },
       {
         label: 'Services',
@@ -53,16 +70,29 @@ var menu = Menu.buildFromTemplate([
         label: 'New Sheet',
         accelerator: 'CmdOrCtrl+N',
         click: function(item, focusedWindow) {
-          alert("test")
+          _mainWindow.webContents.send('newSheet');
+        }
+      },
+      {
+        label: 'Copy Sheet',
+        accelerator: 'CmdOrCtrl+B',
+        click: function(item, focusedWindow) {
+          _mainWindow.webContents.send('copySheet');
         }
       },
       {
         label: 'Delete Sheet',
-        accelerator: 'CmdOrCtrl+W'
+        accelerator: 'CmdOrCtrl+W',
+        click: function(item, focusedWindow) {
+          _mainWindow.webContents.send('deleteSheet');
+        }
       },
       {
         label: 'Lock Sheet',
-        accelerator: 'CmdOrCtrl+M'
+        accelerator: 'CmdOrCtrl+M',
+        click: function(item, focusedWindow) {
+          _mainWindow.webContents.send('lockSheet');
+        }
       }
     ]
   },
@@ -94,24 +124,29 @@ var menu = Menu.buildFromTemplate([
         label: 'Paste',
         accelerator: 'CmdOrCtrl+V',
         selector: 'paste:'
-      }
-    ]
-  },
-  {
-    label: 'Find',  /* Menu3 */
-    submenu: [
-      {
-        label: 'Find',
-        accelerator: 'CmdOrCtrl+F',
-        selector: 'find:'
       },
       {
-        label: 'Replace',
-        accelerator: 'Shift+CmdOrCtrl+V',
-        selector: 'paste'
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        selector: 'selectAll:'
       }
     ]
   },
+  // {
+  //   label: 'Find',  /* Menu3 */
+  //   submenu: [
+  //     {
+  //       label: 'Find',
+  //       accelerator: 'CmdOrCtrl+F',
+  //       selector: 'find:'
+  //     },
+  //     {
+  //       label: 'Replace',
+  //       accelerator: 'Shift+CmdOrCtrl+V',
+  //       selector: 'replace'
+  //     }
+  //   ]
+  // },
   {
     label: 'View',  /* Menu4 */
     submenu: [
